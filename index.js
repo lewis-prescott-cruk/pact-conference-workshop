@@ -9,8 +9,7 @@ exports.getMeIngredients = endpoint => {
   return axios.request({
     method: "GET",
     baseURL: `${url}:${port}`,
-    url: "",
-    params: {},
+    url: "/ingredients/chocolate",
     headers: { Accept: "application/json" },
   })
 }

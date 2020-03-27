@@ -14,12 +14,12 @@ describe("The Cake API", () => {
     log: path.resolve(process.cwd(), "logs", "mockserver-integration.log"),
     dir: path.resolve(process.cwd(), "pacts"),
     spec: 2,
-    consumer: "MyConsumer",
-    provider: "MyProvider",
+    consumer: "Paul",
+    provider: "Cake",
     pactfileWriteMode: "merge",
   })
 
-  const EXPECTED_BODY = [{}]
+  const EXPECTED_BODY = ['cocoa', 'butter']
 
   // Setup the provider
   before(() => provider.setup())
@@ -33,11 +33,10 @@ describe("The Cake API", () => {
   describe("get ingredients", () => {
     before(done => {
       const interaction = {
-        uponReceiving: "",
+        uponReceiving: "GET Request for ingredients",
         withRequest: {
           method: "GET",
-          path: "/",
-          query: "",
+          path: "/ingredients/chocolate",
           headers: {
             Accept: "application/json",
           },
