@@ -1,42 +1,41 @@
 "use strict"
-
 const expect = require("chai").expect
 const path = require("path")
 const { Pact } = require("@pact-foundation/pact")
 const { getMeIngredients } = require("../index")
-
 describe("The Cake API", () => {
   let url = "http://localhost"
   const port = 8992
-
   const provider = new Pact({
     port: port,
     log: path.resolve(process.cwd(), "logs", "mockserver-integration.log"),
     dir: path.resolve(process.cwd(), "pacts"),
     spec: 2,
-    consumer: "Paul",
-    provider: "Cake",
+    consumer: "MyConsumer",
+    provider: "MyProvider",
     pactfileWriteMode: "merge",
   })
-
-  const EXPECTED_BODY = ['cocoa', 'butter']
-
+  const EXPECTED_BODY = [
+  "butter",
+  "caster sugar",
+  "eggs",
+  "self-raising flour",
+  "baking powder",
+  "cocoa powder"]
   // Setup the provider
   before(() => provider.setup())
-
   // Write Pact when all tests done
   after(() => provider.finalize())
-
   // verify with Pact, and reset expectations
   afterEach(() => provider.verify())
-
   describe("get ingredients", () => {
     before(done => {
       const interaction = {
-        uponReceiving: "GET Request for ingredients",
+        uponReceiving: "cake type",
         withRequest: {
           method: "GET",
-          path: "/ingredients/chocolate",
+          path: "/ingredients",
+          query: {cake : "chocolate"},
           headers: {
             Accept: "application/json",
           },
@@ -53,7 +52,6 @@ describe("The Cake API", () => {
         done()
       })
     })
-
     it("returns the correct response", done => {
       const urlAndPort = {
         url: url,
