@@ -4,7 +4,7 @@
   "description": "Mocha Pact example",
   "main": "index.js",
   "scripts": {
-    "test": "rimraf pacts && mocha",
+    "test": "rimraf pacts && mocha --recursive \"test/*.spec.js\" --timeout 10000",
     "publish": "node test/publish.js"
   },
   "license": "MIT",

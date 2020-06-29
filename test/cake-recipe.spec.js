@@ -22,36 +22,36 @@ describe("The Cake API", () => {
   "self-raising flour",
   "baking powder",
   "cocoa powder"]
-  // Setup the provider
-  before(() => provider.setup())
   // Write Pact when all tests done
   after(() => provider.finalize())
   // verify with Pact, and reset expectations
   afterEach(() => provider.verify())
   describe("get ingredients", () => {
-    before(done => {
-      const interaction = {
-        uponReceiving: "cake type",
-        withRequest: {
-          method: "GET",
-          path: "/ingredients",
-          query: {cake : "chocolate"},
-          headers: {
-            Accept: "application/json",
-          },
+    const interaction = {
+      uponReceiving: "cake type",
+      withRequest: {
+        method: "GET",
+        path: "/ingredients",
+        query: {cake : "chocolate"},
+        headers: {
+          Accept: "application/json",
         },
-        willRespondWith: {
-          status: 200,
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: EXPECTED_BODY,
+      },
+      willRespondWith: {
+        status: 200,
+        headers: {
+          "Content-Type": "application/json",
         },
-      }
-      provider.addInteraction(interaction).then(() => {
-        done()
-      })
-    })
+        body: EXPECTED_BODY,
+      },
+    };
+    before(() => 
+      provider.setup()
+      .then(() =>
+        provider.addInteraction(interaction)
+      )
+    );
+
     it("returns the correct response", done => {
       const urlAndPort = {
         url: url,
